@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Usuario',
   });
 
-  // 👉 Hook que encripta la contraseña antes de crear
+  // Hook que encripta la contraseña antes de crear
   Usuario.beforeCreate(async (usuario) => {
-    const bcrypt = require('bcryptjs'); // Usá bcryptjs si ya lo estás usando en el resto del proyecto
+    const bcrypt = require('bcryptjs'); 
     const salt = await bcrypt.genSalt(10);
     usuario.password = await bcrypt.hash(usuario.password, salt);
   });

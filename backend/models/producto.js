@@ -3,26 +3,23 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Producto extends Model {
     static associate(models) {
-      Producto.associate = (models) => {
-        Producto.belongsToMany(models.Venta, {
-          through: models.DetalleVenta,
-          foreignKey: 'productoId'
-        });
-      };
+      // Asociación con DetalleVenta
+      this.hasMany(models.DetalleVenta, { foreignKey: 'productoId' });
     }
   }
+
   Producto.init({
     tipo: DataTypes.STRING,
     nombre: DataTypes.STRING,
     artista: DataTypes.STRING,
-    fechaShow: DataTypes.DATE,
-    precio: DataTypes.DECIMAL,
+    precio: DataTypes.FLOAT,
     imagen: DataTypes.STRING,
+    fechaShow: DataTypes.DATE,
     activo: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Producto',
-    timestamps: true, // 👈 Esto agrega createdAt y updatedAt automáticamente
   });
+
   return Producto;
 };

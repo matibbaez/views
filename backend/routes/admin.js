@@ -130,5 +130,25 @@ router.post('/productos', upload.single('imagen'), async (req, res) => {
   res.redirect('/admin/productos');
 });
 
+const { Venta, DetalleVenta } = require('../models');
+
+router.get('/ventas', async (req, res) => {
+  if (!req.session.adminId) return res.redirect('/admin/login');
+
+  const ventas = await Venta.findAll({
+    include: [
+      {
+        model: DetalleVenta,
+        as: 'detalles',
+        include: [{ model: Producto, as: 'producto' }]
+      }
+    ],
+    order: [['fecha', 'DESC']]
+  });
+
+
+  res.render('admin/ventas', { ventas });
+});
+
 
 module.exports = router;
