@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= producto ? 'Editar' : 'Nuevo' %> Producto</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <h1><%= producto ? 'Editar' : 'Nuevo' %> Producto</h1>
+
+  <form action="<%= producto ? '/admin/productos/' + producto.id : '/admin/productos' %>" method="POST" enctype="multipart/form-data">
+    
+    <label>Tipo:</label>
+    <select name="tipo" required>
+      <option value="album" <%= producto && producto.tipo === 'album' ? 'selected' : '' %>>Álbum</option>
+      <option value="entrada" <%= producto && producto.tipo === 'entrada' ? 'selected' : '' %>>Entrada</option>
+    </select>
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required value="<%= producto ? producto.nombre : '' %>">
+
+    <label>Artista:</label>
+    <input type="text" name="artista" required value="<%= producto ? producto.artista : '' %>">
+
+    <label>Precio:</label>
+    <input type="number" name="precio" required step="0.01" value="<%= producto ? producto.precio : '' %>">
+
+    <label>Fecha del show (solo entradas):</label>
+    <input type="date" name="fechaShow" value="<%= producto && producto.fechaShow ? producto.fechaShow.toISOString().split('T')[0] : '' %>">
+
+    <label>Imagen:</label>
+    <% if (producto && producto.imagen) { %>
+      <p>Imagen actual:</p>
+      <img src="/uploads/<%= producto.imagen %>" width="150">
+    <% } %>
+    <input type="file" name="imagen" accept="image/*">
+
+    <label>
+      <input type="checkbox" name="activo" <%= producto && producto.activo ? 'checked' : '' %>>
+      Activo
+    </label>
+
+    <br><br>
+    <button type="submit"><%= producto ? 'Actualizar' : 'Crear' %> Producto</button>
+  </form>
+
+  <br>
+  <a href="/admin/productos">← Volver a productos</a>
+</body>
+</html>
+

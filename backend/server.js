@@ -1,16 +1,34 @@
 const express = require('express');
-const app = express();
+const session = require('express-session');
 const path = require('path');
-const { Producto } = require('./models');
 const cors = require('cors');
 
-app.use(cors());
-app.use(express.json());
+const { Producto } = require('./models');
+const adminRoutes = require('./routes/admin');
 
-// 👇 Esta línea expone la carpeta "uploads" públicamente
+const app = express();
+
+// Motor de vistas EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Middlewares
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Ruta base de prueba
+// Sesiones
+app.use(session({
+  secret: 'secreto123',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Rutas admin
+app.use('/admin', adminRoutes);
+
+// Ruta base
 app.get('/', (req, res) => {
   res.send('API de productos musicales funcionando 🎵');
 });
