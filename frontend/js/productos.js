@@ -1,10 +1,21 @@
 const nombre = localStorage.getItem('nombreCliente');
 document.getElementById('clienteNombre').textContent = nombre ?? 'Cliente';
 
+function mostrar(tipo) {
+  document.getElementById('albumes').style.display = tipo === 'albumes' ? 'flex' : 'none';
+  document.getElementById('entradas').style.display = tipo === 'entradas' ? 'flex' : 'none';
+
+  document.getElementById('btnAlbumes').classList.toggle('active', tipo === 'albumes');
+  document.getElementById('btnEntradas').classList.toggle('active', tipo === 'entradas');
+}
+
+
 fetch('http://localhost:3000/api/productos')
   .then(res => res.json())
   .then(data => {
-    const contenedor = document.getElementById('productos');
+    const contAlbumes = document.getElementById('albumes');
+    const contEntradas = document.getElementById('entradas');
+
     data.forEach(prod => {
       if (!prod.activo) return;
 
@@ -19,7 +30,6 @@ fetch('http://localhost:3000/api/productos')
         <button>Agregar al carrito</button>
       `;
 
-      // 👇 Agregar comportamiento del botón
       const boton = card.querySelector('button');
       boton.addEventListener('click', () => {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -40,7 +50,11 @@ fetch('http://localhost:3000/api/productos')
         alert(`${prod.nombre} agregado al carrito`);
       });
 
-      contenedor.appendChild(card);
+      // Insertamos según tipo
+      if (prod.tipo === 'album') {
+        contAlbumes.appendChild(card);
+      } else if (prod.tipo === 'entrada') {
+        contEntradas.appendChild(card);
+      }
     });
   });
-

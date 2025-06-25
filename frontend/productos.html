@@ -7,8 +7,16 @@
 </head>
 <body>
   <h1>🎵 Bienvenido <span id="clienteNombre"></span></h1>
-  <div id="productos" class="grid"></div>
+
+  <div>
+    <button id="btnAlbumes" class="tab active" onclick="mostrar('albumes')">Álbumes</button>
+    <button id="btnEntradas" class="tab" onclick="mostrar('entradas')">Entradas</button>
+  </div>
+
+  <div id="albumes" class="grid"></div>
+  <div id="entradas" class="grid" style="display: none;"></div>
 
   <script src="js/productos.js"></script>
 </body>
+
 </html>

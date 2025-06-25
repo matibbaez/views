@@ -32,10 +32,20 @@ function renderCarrito() {
 }
 
 function cambiarCantidad(index, cambio) {
-  carrito[index].cantidad += cambio;
-  if (carrito[index].cantidad <= 0) carrito.splice(index, 1);
+  const nuevaCantidad = carrito[index].cantidad + cambio;
+
+  if (nuevaCantidad <= 0) {
+    carrito.splice(index, 1);
+  } else if (nuevaCantidad > 99) {
+    alert('Máximo 99 unidades por producto');
+    return;
+  } else {
+    carrito[index].cantidad = nuevaCantidad;
+  }
+
   guardarYRender();
 }
+
 
 function eliminarProducto(index) {
   carrito.splice(index, 1);
@@ -43,8 +53,10 @@ function eliminarProducto(index) {
 }
 
 function vaciarCarrito() {
-  localStorage.removeItem('carrito');
-  location.reload();
+  if (confirm('¿Estás seguro de que querés vaciar el carrito?')) {
+    localStorage.removeItem('carrito');
+    location.reload();
+  }
 }
 
 function guardarYRender() {
@@ -56,19 +68,26 @@ async function confirmarCompra() {
   if (carrito.length === 0) return alert('Tu carrito está vacío');
 
   const nombre = localStorage.getItem('nombreCliente');
-  const response = await fetch('http://localhost:3000/api/ventas', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombreCliente: nombre, productos: carrito })
-  });
 
-  const data = await response.json();
-  if (data.success) {
-    localStorage.setItem('ticket', JSON.stringify({ nombreCliente: nombre, productos: carrito }));
-    localStorage.removeItem('carrito');
-    window.location.href = 'ticket.html';
-  } else {
-    alert('Hubo un error al finalizar la compra');
+  try {
+    const response = await fetch('http://localhost:3000/api/ventas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombreCliente: nombre, productos: carrito })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem('ticket', JSON.stringify({ nombreCliente: nombre, productos: carrito }));
+      localStorage.removeItem('carrito');
+      window.location.href = 'ticket.html';
+    } else {
+      alert('Hubo un error al finalizar la compra');
+    }
+  } catch (error) {
+    alert('Error de conexión con el servidor');
+    console.error(error);
   }
 }
 
