@@ -3,10 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <title>Panel de Administración</title>
-  <link rel="stylesheet" href="/admin.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      background: #333;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 30px auto;
+      max-width: 900px;
+    }
+
+    .card {
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      flex: 1 1 200px;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Bienvenido, administrador</h1>
+  <h1>🎛️ Panel de Administración</h1>
 
   <nav>
     <ul>
@@ -15,5 +60,25 @@
       <li><a href="/admin/logout">Cerrar sesión</a></li>
     </ul>
   </nav>
+
+  <h2>📊 Estadísticas</h2>
+  <div class="stats">
+    <div class="card">
+      <h3>Productos activos</h3>
+      <p><strong><%= totalProductos %></strong></p>
+    </div>
+    <div class="card">
+      <h3>Ventas realizadas</h3>
+      <p><strong><%= totalVentas %></strong></p>
+    </div>
+    <div class="card">
+      <h3>Unidades vendidas</h3>
+      <p><strong><%= unidadesVendidas || 0 %></strong></p>
+    </div>
+    <div class="card">
+      <h3>Última venta</h3>
+      <p><%= ultimaVenta ? new Date(ultimaVenta.fecha).toLocaleDateString() : '—' %></p>
+    </div>
+  </div>
 </body>
 </html>

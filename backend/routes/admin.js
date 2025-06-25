@@ -27,13 +27,29 @@ router.post('/login', async (req, res) => {
 });
 
 // GET: dashboard (por ahora solo para testear login)
-router.get('/dashboard', (req, res) => {
-  if (!req.session.adminId) {
-    return res.redirect('/admin/login');
-  }
+router.get('/dashboard', async (req, res) => {
+  if (!req.session.adminId) return res.redirect('/admin/login');
 
-  res.render('admin/dashboard');
+  const [
+    totalProductos,
+    totalVentas,
+    unidadesVendidas,
+    ultimaVenta
+  ] = await Promise.all([
+    Producto.count({ where: { activo: true } }),
+    Venta.count(),
+    DetalleVenta.sum('cantidad'),
+    Venta.findOne({ order: [['fecha', 'DESC']] })
+  ]);
+
+  res.render('admin/dashboard', {
+    totalProductos,
+    totalVentas,
+    unidadesVendidas,
+    ultimaVenta
+  });
 });
+
 
 // GET: logout
 router.get('/logout', (req, res) => {
