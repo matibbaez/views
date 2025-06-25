@@ -50,7 +50,6 @@ router.get('/dashboard', async (req, res) => {
   });
 });
 
-
 // GET: logout
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
@@ -100,12 +99,39 @@ router.post('/productos/:id', upload.single('imagen'), async (req, res) => {
   const datos = req.body;
   const nuevaImagen = req.file ? req.file.filename : producto.imagen;
 
+  const nombre = datos.nombre?.trim();
+  const artista = datos.artista?.trim();
+  const precio = parseFloat(datos.precio);
+  const fechaShow = datos.fechaShow ? new Date(datos.fechaShow) : null;
+
+  // Validaciones
+  if (!datos.tipo || !nombre || !artista || isNaN(precio)) {
+    return res.render('admin/producto-form', {
+      producto,
+      error: 'Completá todos los campos con valores válidos.'
+    });
+  }
+
+  if (precio <= 0) {
+    return res.render('admin/producto-form', {
+      producto,
+      error: 'El precio debe ser mayor a cero.'
+    });
+  }
+
+  if (datos.tipo === 'entrada' && (!fechaShow || fechaShow < new Date())) {
+    return res.render('admin/producto-form', {
+      producto,
+      error: 'La fecha del show debe ser válida y no puede ser pasada.'
+    });
+  }
+
   await producto.update({
     tipo: datos.tipo,
-    nombre: datos.nombre,
-    artista: datos.artista,
-    precio: datos.precio,
-    fechaShow: datos.fechaShow || null,
+    nombre,
+    artista,
+    precio,
+    fechaShow: datos.tipo === 'entrada' ? fechaShow : null,
     imagen: nuevaImagen,
     activo: datos.activo ? true : false
   });
@@ -121,7 +147,6 @@ router.post('/productos/:id/eliminar', async (req, res) => {
   res.redirect('/admin/productos');
 });
 
-
 // GET: formulario de nuevo producto
 router.get('/productos/nuevo', (req, res) => {
   if (!req.session.adminId) return res.redirect('/admin/login');
@@ -133,12 +158,39 @@ router.post('/productos', upload.single('imagen'), async (req, res) => {
   const datos = req.body;
   const imagen = req.file ? req.file.filename : null;
 
+  const nombre = datos.nombre?.trim();
+  const artista = datos.artista?.trim();
+  const precio = parseFloat(datos.precio);
+  const fechaShow = datos.fechaShow ? new Date(datos.fechaShow) : null;
+
+  // Validaciones
+  if (!datos.tipo || !nombre || !artista || isNaN(precio)) {
+    return res.render('admin/producto-form', {
+      producto: null,
+      error: 'Completá todos los campos con valores válidos.'
+    });
+  }
+
+  if (precio <= 0) {
+    return res.render('admin/producto-form', {
+      producto: null,
+      error: 'El precio debe ser mayor a cero.'
+    });
+  }
+
+  if (datos.tipo === 'entrada' && (!fechaShow || fechaShow < new Date())) {
+    return res.render('admin/producto-form', {
+      producto: null,
+      error: 'La fecha del show debe ser válida y no puede ser pasada.'
+    });
+  }
+
   await Producto.create({
     tipo: datos.tipo,
-    nombre: datos.nombre,
-    artista: datos.artista,
-    precio: datos.precio,
-    fechaShow: datos.fechaShow || null,
+    nombre,
+    artista,
+    precio,
+    fechaShow: datos.tipo === 'entrada' ? fechaShow : null,
     imagen,
     activo: datos.activo ? true : false
   });
@@ -162,9 +214,7 @@ router.get('/ventas', async (req, res) => {
     order: [['fecha', 'DESC']]
   });
 
-
   res.render('admin/ventas', { ventas });
 });
-
 
 module.exports = router;

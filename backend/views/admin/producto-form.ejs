@@ -8,6 +8,10 @@
 <body>
   <h1><%= producto ? 'Editar' : 'Nuevo' %> Producto</h1>
 
+  <% if (typeof error !== 'undefined' && error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+
   <form action="<%= producto ? '/admin/productos/' + producto.id : '/admin/productos' %>" method="POST" enctype="multipart/form-data">
     
     <label>Tipo:</label>
