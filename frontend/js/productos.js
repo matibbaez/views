@@ -9,7 +9,6 @@ function mostrar(tipo) {
   document.getElementById('btnEntradas').classList.toggle('active', tipo === 'entradas');
 }
 
-
 fetch('http://localhost:3000/api/productos')
   .then(res => res.json())
   .then(data => {
