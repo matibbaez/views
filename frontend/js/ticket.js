@@ -61,6 +61,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
     const element = document.getElementById('ticketContenido');
     const qrImg = element.querySelector('img');
 
+    // Esperar a que cargue el QR
     if (qrImg.complete) {
       generarPDF(element);
     } else {
@@ -79,5 +80,21 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
   }
 
   document.body.appendChild(btn);
+
+  // Botón para volver a productos
+  const volverBtn = document.createElement('a');
+  volverBtn.textContent = '← Volver a productos';
+  volverBtn.href = 'productos.html';
+  volverBtn.style.display = 'inline-block';
+  volverBtn.style.marginTop = '20px';
+  volverBtn.style.marginLeft = '12px';
+  volverBtn.style.padding = '8px 16px';
+  volverBtn.style.borderRadius = '8px';
+  volverBtn.style.backgroundColor = '#575472';
+  volverBtn.style.color = '#fff';
+  volverBtn.style.textDecoration = 'none';
+  volverBtn.style.fontWeight = 'bold';
+
+  document.body.appendChild(volverBtn);
 }
 

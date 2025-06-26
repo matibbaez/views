@@ -46,16 +46,20 @@ fetch('http://localhost:3000/api/productos')
         }
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
+        actualizarContador();
         Swal.fire({
           toast: true,
-          position: 'top-end',
+          position: 'bottom-end', // Cambiado desde 'top-end'
           icon: 'success',
           title: `${prod.nombre} agregado al carrito`,
           showConfirmButton: false,
           timer: 1800,
           timerProgressBar: true,
           background: '#575472',
-          color: '#fff'
+          color: '#fff',
+          customClass: {
+            popup: 'swal-toast-bottom'
+          }
         });
       });
 
@@ -67,3 +71,13 @@ fetch('http://localhost:3000/api/productos')
       }
     });
   });
+
+  function actualizarContador() {
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const totalCantidad = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+  document.getElementById('contadorCarrito').textContent = totalCantidad;
+}
+
+// Mostrar el número al cargar la página
+actualizarContador();
+

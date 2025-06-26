@@ -7,21 +7,42 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <h1>🎵 Bienvenido <span id="clienteNombre"></span></h1>
-  <a href="carrito.html" class="btn-nav">🛒 Ir al carrito</a>
 
+  <!-- Header con logo y bienvenida -->
+  <header class="header">
+    <div class="logo">
+      <img src="img/ViewsLogo.png" alt="Logo Views">
+    </div>
+    <div class="bienvenida">
+      <span>Bienvenido, <span id="clienteNombre"></span></span>
+      <a href="carrito.html" class="btn-carrito">
+      Carrito: <span id="contadorCarrito">0</span>
+    </a>
+    </div>
+  </header>
+
+  <!-- Banner de presentación -->
+  <section class="banner">
+    <div class="banner-content">
+      <h2>Somos <span>Views</span></h2>
+      <p>Tu espacio musical favorito para descubrir, comprar y disfrutar de la mejor música y shows en vivo.</p>
+    </div>
+  </section>
+
+  <!-- Filtros -->
   <div class="filtros">
-    <button id="btnAlbumes" class="tab active" onclick="mostrar('albumes')">Álbumes</button>
-    <button id="btnEntradas" class="tab" onclick="mostrar('entradas')">Entradas</button>
+    <button class="tab active" id="btnAlbumes" onclick="mostrar('albumes')">Álbumes</button>
+    <button class="tab" id="btnEntradas" onclick="mostrar('entradas')">Entradas</button>
   </div>
 
+  <!-- Grids de productos -->
   <div id="albumes" class="grid"></div>
   <div id="entradas" class="grid" style="display: none;"></div>
 
   <footer class="footer">
-  <p>© 2025 Views — Todos los derechos reservados</p>
+    <p>© 2025 Views — Todos los derechos reservados</p>
   </footer>
+
   <script src="js/productos.js"></script>
 </body>
-
 </html>
