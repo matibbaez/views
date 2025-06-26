@@ -4,17 +4,24 @@
   <meta charset="UTF-8">
   <title>Carrito - Views</title>
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <h1>🛒 Tu carrito, <span id="nombreCliente"></span></h1>
   <a href="productos.html" class="btn-nav">← Volver a productos</a>
 
-  <div id="carrito"></div>
-  <h3>Total: $<span id="total">0</span></h3>
+  <div id="carrito" class="grid"></div>
+  <div class="total-contenedor">
+    <h3>Total: $<span id="total">0</span></h3>
+  </div>
 
   <button onclick="confirmarCompra()">Finalizar compra</button>
   <button onclick="vaciarCarrito()">Vaciar carrito</button>
 
+  <footer class="footer">
+  <p>© 2025 Views — Todos los derechos reservados</p>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="js/carrito.js"></script>
 </body>
 </html>

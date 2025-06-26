@@ -16,7 +16,7 @@
     <% ventas.forEach(venta => { %>
         <div class="venta">
             <p><strong>Cliente:</strong> <%= venta.nombreCliente %></p>
-            <p><strong>Fecha:</strong> <%= venta.fecha.toLocaleDateString() %></p>
+            <p><strong>Fecha:</strong> <%= new Date(venta.fecha).toLocaleString('es-AR') %></p>
             <p><strong>Total:</strong> $<%= venta.total %></p>
             <p><strong>Productos:</strong></p>
             <ul>

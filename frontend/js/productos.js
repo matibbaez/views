@@ -46,7 +46,17 @@ fetch('http://localhost:3000/api/productos')
         }
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
-        alert(`${prod.nombre} agregado al carrito`);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: `${prod.nombre} agregado al carrito`,
+          showConfirmButton: false,
+          timer: 1800,
+          timerProgressBar: true,
+          background: '#575472',
+          color: '#fff'
+        });
       });
 
       // Insertamos según tipo

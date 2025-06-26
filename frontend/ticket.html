@@ -2,32 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ticket de compra</title>
+  <title>Ticket - Views</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>🎟️ Ticket de compra</h1>
-  <div id="ticket"></div>
-  <button onclick="reiniciar()">Salir</button>
-
-  <script>
-    const venta = JSON.parse(localStorage.getItem('ticket'));
-    const contenedor = document.getElementById('ticket');
-    let html = `<p>Cliente: ${venta.nombreCliente}</p><p>Fecha: ${new Date().toLocaleDateString()}</p><ul>`;
-    let total = 0;
-
-    venta.productos.forEach(p => {
-      total += p.precio * p.cantidad;
-      html += `<li>${p.nombre} x${p.cantidad} - $${p.precio}</li>`;
-    });
-
-    html += `</ul><p><strong>Total: $${total}</strong></p>`;
-    contenedor.innerHTML = html;
-
-    function reiniciar() {
-      localStorage.clear();
-      window.location.href = 'bienvenida.html';
-    }
-  </script>
+  <div id="ticketContainer"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="js/ticket.js"></script>
 </body>
+
 </html>
+
+
