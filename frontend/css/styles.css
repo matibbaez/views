@@ -21,6 +21,7 @@ h1 {
 }
 
 button {
+  font-family: 'Poppins', sans-serif;
   padding: 10px 20px;
   font-weight: 600;
   background-color: #575472; /* Color principal */
@@ -314,3 +315,5 @@ ul {
   top: -2px;
   left: 4px;
 }
+
+
