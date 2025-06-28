@@ -6,7 +6,7 @@ const multer = require('multer');
 
 const { Usuario, Producto, Venta, DetalleVenta } = require('../models');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { validarProducto } = require('../middlewares/validacionesProducto');
+const validarProducto = require('../middlewares/validacionesProducto');
 
 // Configuración de multer
 const storage = multer.diskStorage({

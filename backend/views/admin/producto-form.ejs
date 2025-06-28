@@ -6,50 +6,68 @@
   <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
-  <h1><%= producto ? 'Editar' : 'Nuevo' %> Producto</h1>
+  <div class="logo">
+    <img src="/img/ViewsLogo.png" alt="Logo Views">
+  </div>
 
-  <% if (typeof error !== 'undefined' && error) { %>
-    <p style="color: red;"><%= error %></p>
-  <% } %>
+  <div class="card card-form">
+    <h1><%= producto ? 'Editar' : 'Nuevo' %> Producto</h1>
 
-  <form action="<%= producto ? '/admin/productos/' + producto.id : '/admin/productos' %>" method="POST" enctype="multipart/form-data">
-    
-    <label>Tipo:</label>
-    <select name="tipo" required>
-      <option value="album" <%= producto && producto.tipo === 'album' ? 'selected' : '' %>>Álbum</option>
-      <option value="entrada" <%= producto && producto.tipo === 'entrada' ? 'selected' : '' %>>Entrada</option>
-    </select>
-
-    <label>Nombre:</label>
-    <input type="text" name="nombre" required value="<%= producto ? producto.nombre : '' %>">
-
-    <label>Artista:</label>
-    <input type="text" name="artista" required value="<%= producto ? producto.artista : '' %>">
-
-    <label>Precio:</label>
-    <input type="number" name="precio" required step="0.01" value="<%= producto ? producto.precio : '' %>">
-
-    <label>Fecha del show (solo entradas):</label>
-    <input type="date" name="fechaShow" value="<%= producto && producto.fechaShow ? producto.fechaShow.toISOString().split('T')[0] : '' %>">
-
-    <label>Imagen:</label>
-    <% if (producto && producto.imagen) { %>
-      <p>Imagen actual:</p>
-      <img src="/uploads/<%= producto.imagen %>" width="150">
+    <% if (typeof error !== 'undefined' && error) { %>
+      <p class="error"><%= error %></p>
     <% } %>
-    <input type="file" name="imagen" accept="image/*">
 
-    <label>
-      <input type="checkbox" name="activo" <%= producto && producto.activo ? 'checked' : '' %>>
-      Activo
-    </label>
+    <form action="<%= producto ? '/admin/productos/' + producto.id : '/admin/productos' %>" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo" required>
+          <option value="album" <%= producto && producto.tipo === 'album' ? 'selected' : '' %>>Álbum</option>
+          <option value="entrada" <%= producto && producto.tipo === 'entrada' ? 'selected' : '' %>>Entrada</option>
+        </select>
+      </div>
 
-    <br><br>
-    <button type="submit"><%= producto ? 'Actualizar' : 'Crear' %> Producto</button>
-  </form>
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required value="<%= producto ? producto.nombre : '' %>">
+      </div>
 
-  <br>
-  <a href="/admin/productos">← Volver a productos</a>
+      <div class="form-group">
+        <label for="artista">Artista:</label>
+        <input type="text" name="artista" id="artista" required value="<%= producto ? producto.artista : '' %>">
+      </div>
+
+      <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input type="number" name="precio" id="precio" required step="0.01" value="<%= producto ? producto.precio : '' %>">
+      </div>
+
+      <div class="form-group">
+        <label for="fechaShow">Fecha del show (solo entradas):</label>
+        <input type="date" name="fechaShow" id="fechaShow" value="<%= producto && producto.fechaShow ? producto.fechaShow.toISOString().split('T')[0] : '' %>">
+      </div>
+
+      <div class="form-group">
+        <label for="imagen">Imagen:</label>
+        <% if (producto && producto.imagen) { %>
+          <p>Imagen actual:</p>
+          <img src="/uploads/<%= producto.imagen %>" width="150">
+        <% } %>
+        <input type="file" name="imagen" id="imagen" accept="image/*">
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="activo" <%= producto && producto.activo ? 'checked' : '' %>>
+          Producto activo
+        </label>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn"><%= producto ? 'Actualizar' : 'Crear' %> Producto</button>
+        <a href="/admin/productos" class="btn">Volver a productos</a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
 
