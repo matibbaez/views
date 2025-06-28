@@ -1,35 +1,49 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const { Usuario } = require('../models');
+const path = require('path');
+const multer = require('multer');
 
-// GET: formulario de login
+const { Usuario, Producto, Venta, DetalleVenta } = require('../models');
+const authMiddleware = require('../middlewares/authMiddleware');
+const { validarProducto } = require('../middlewares/validacionesProducto');
+
+// Configuración de multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads'),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  }
+});
+const upload = multer({ storage });
+
+// --- LOGIN ---
 router.get('/login', (req, res) => {
   res.render('admin/login', { error: null });
 });
 
-// POST: procesar login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const usuario = await Usuario.findOne({ where: { email } });
 
-  if (!usuario) {
-    return res.render('admin/login', { error: 'Usuario no encontrado' });
-  }
+  if (!usuario) return res.render('admin/login', { error: 'Usuario no encontrado' });
 
   const validPassword = await bcrypt.compare(password, usuario.password);
-  if (!validPassword) {
-    return res.render('admin/login', { error: 'Contraseña incorrecta' });
-  }
+  if (!validPassword) return res.render('admin/login', { error: 'Contraseña incorrecta' });
 
   req.session.adminId = usuario.id;
   res.redirect('/admin/dashboard');
 });
 
-// GET: dashboard (por ahora solo para testear login)
-router.get('/dashboard', async (req, res) => {
-  if (!req.session.adminId) return res.redirect('/admin/login');
+router.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/admin/login');
+  });
+});
 
+// --- DASHBOARD ---
+router.get('/dashboard', authMiddleware, async (req, res) => {
   const [
     totalProductos,
     totalVentas,
@@ -50,88 +64,55 @@ router.get('/dashboard', async (req, res) => {
   });
 });
 
-// GET: logout
-router.get('/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/admin/login');
-  });
-});
-
-const path = require('path');
-const { Producto } = require('../models');
-
-// GET: listar productos
-router.get('/productos', async (req, res) => {
-  if (!req.session.adminId) {
-    return res.redirect('/admin/login');
-  }
-
+// --- PRODUCTOS ---
+router.get('/productos', authMiddleware, async (req, res) => {
   const productos = await Producto.findAll();
   res.render('admin/productos', { productos });
 });
 
-const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads'),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const name = Date.now() + ext;
-    cb(null, name);
-  }
+router.get('/productos/nuevo', authMiddleware, (req, res) => {
+  res.render('admin/producto-form', { producto: null });
 });
-const upload = multer({ storage });
 
-// GET: formulario de edición
-router.get('/productos/:id/editar', async (req, res) => {
-  if (!req.session.adminId) return res.redirect('/admin/login');
+router.post('/productos', authMiddleware, upload.single('imagen'), validarProducto, async (req, res) => {
+  const datos = req.body;
+  const imagen = req.file ? req.file.filename : null;
 
+  await Producto.create({
+    tipo: datos.tipo,
+    nombre: datos.nombre.trim(),
+    artista: datos.artista.trim(),
+    precio: parseFloat(datos.precio),
+    fechaShow: datos.tipo === 'entrada' ? new Date(datos.fechaShow) : null,
+    imagen,
+    activo: true
+  });
+
+  res.redirect('/admin/productos');
+});
+
+router.get('/productos/:id/editar', authMiddleware, async (req, res) => {
   const producto = await Producto.findByPk(req.params.id);
   if (!producto) return res.redirect('/admin/productos');
-
   res.render('admin/producto-form', { producto });
 });
 
-// POST: actualizar producto
-router.post('/productos/:id', upload.single('imagen'), async (req, res) => {
+router.post('/productos/:id', authMiddleware, upload.single('imagen'), async (req, res, next) => {
   const producto = await Producto.findByPk(req.params.id);
   if (!producto) return res.redirect('/admin/productos');
-
+  req.producto = producto;
+  next();
+}, validarProducto, async (req, res) => {
   const datos = req.body;
+  const producto = req.producto;
   const nuevaImagen = req.file ? req.file.filename : producto.imagen;
-
-  const nombre = datos.nombre?.trim();
-  const artista = datos.artista?.trim();
-  const precio = parseFloat(datos.precio);
-  const fechaShow = datos.fechaShow ? new Date(datos.fechaShow) : null;
-
-  // Validaciones
-  if (!datos.tipo || !nombre || !artista || isNaN(precio)) {
-    return res.render('admin/producto-form', {
-      producto,
-      error: 'Completá todos los campos con valores válidos.'
-    });
-  }
-
-  if (precio <= 0) {
-    return res.render('admin/producto-form', {
-      producto,
-      error: 'El precio debe ser mayor a cero.'
-    });
-  }
-
-  if (datos.tipo === 'entrada' && (!fechaShow || fechaShow < new Date())) {
-    return res.render('admin/producto-form', {
-      producto,
-      error: 'La fecha del show debe ser válida y no puede ser pasada.'
-    });
-  }
 
   await producto.update({
     tipo: datos.tipo,
-    nombre,
-    artista,
-    precio,
-    fechaShow: datos.tipo === 'entrada' ? fechaShow : null,
+    nombre: datos.nombre.trim(),
+    artista: datos.artista.trim(),
+    precio: parseFloat(datos.precio),
+    fechaShow: datos.tipo === 'entrada' ? new Date(datos.fechaShow) : null,
     imagen: nuevaImagen,
     activo: datos.activo ? true : false
   });
@@ -139,78 +120,19 @@ router.post('/productos/:id', upload.single('imagen'), async (req, res) => {
   res.redirect('/admin/productos');
 });
 
-// POST: eliminar producto
-router.post('/productos/:id/eliminar', async (req, res) => {
-  if (!req.session.adminId) return res.redirect('/admin/login');
-
+router.post('/productos/:id/eliminar', authMiddleware, async (req, res) => {
   await Producto.destroy({ where: { id: req.params.id } });
   res.redirect('/admin/productos');
 });
 
-// GET: formulario de nuevo producto
-router.get('/productos/nuevo', (req, res) => {
-  if (!req.session.adminId) return res.redirect('/admin/login');
-  res.render('admin/producto-form', { producto: null });
-});
-
-// POST: guardar producto nuevo
-router.post('/productos', upload.single('imagen'), async (req, res) => {
-  const datos = req.body;
-  const imagen = req.file ? req.file.filename : null;
-
-  const nombre = datos.nombre?.trim();
-  const artista = datos.artista?.trim();
-  const precio = parseFloat(datos.precio);
-  const fechaShow = datos.fechaShow ? new Date(datos.fechaShow) : null;
-
-  // Validaciones
-  if (!datos.tipo || !nombre || !artista || isNaN(precio)) {
-    return res.render('admin/producto-form', {
-      producto: null,
-      error: 'Completá todos los campos con valores válidos.'
-    });
-  }
-
-  if (precio <= 0) {
-    return res.render('admin/producto-form', {
-      producto: null,
-      error: 'El precio debe ser mayor a cero.'
-    });
-  }
-
-  if (datos.tipo === 'entrada' && (!fechaShow || fechaShow < new Date())) {
-    return res.render('admin/producto-form', {
-      producto: null,
-      error: 'La fecha del show debe ser válida y no puede ser pasada.'
-    });
-  }
-
-  await Producto.create({
-    tipo: datos.tipo,
-    nombre,
-    artista,
-    precio,
-    fechaShow: datos.tipo === 'entrada' ? fechaShow : null,
-    imagen,
-    activo: datos.activo ? true : false
-  });
-
-  res.redirect('/admin/productos');
-});
-
-const { Venta, DetalleVenta } = require('../models');
-
-router.get('/ventas', async (req, res) => {
-  if (!req.session.adminId) return res.redirect('/admin/login');
-
+// --- VENTAS ---
+router.get('/ventas', authMiddleware, async (req, res) => {
   const ventas = await Venta.findAll({
-    include: [
-      {
-        model: DetalleVenta,
-        as: 'detalles',
-        include: [{ model: Producto, as: 'producto' }]
-      }
-    ],
+    include: [{
+      model: DetalleVenta,
+      as: 'detalles',
+      include: [{ model: Producto, as: 'producto' }]
+    }],
     order: [['fecha', 'DESC']]
   });
 
@@ -218,3 +140,4 @@ router.get('/ventas', async (req, res) => {
 });
 
 module.exports = router;
+
