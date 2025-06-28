@@ -49,7 +49,7 @@ fetch('http://localhost:3000/api/productos')
         actualizarContador();
         Swal.fire({
           toast: true,
-          position: 'bottom-end', // Cambiado desde 'top-end'
+          position: 'bottom-end', 
           icon: 'success',
           title: `${prod.nombre} agregado al carrito`,
           showConfirmButton: false,

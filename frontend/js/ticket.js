@@ -35,7 +35,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
   html += `</ul><hr>`;
   html += `<p><strong>Total:</strong> $${total.toFixed(2)}</p>`;
 
-  // Frase + QR (al final)
+  // Frase + QR
   html += `
     <div style="text-align: center; margin-top: 30px;">
       <p style="margin-bottom: 16px;">🎶 ¡Gracias por comprar en <strong>Views</strong>! 🎶<br>Disfrutá de tu música 🖤</p>
@@ -47,21 +47,21 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
   document.body.prepend(contenedor);
 
   // Botón de descarga PDF
-  const btn = document.createElement('button');
-  btn.textContent = '📄 Descargar en PDF';
-  btn.style.marginTop = '20px';
-  btn.style.padding = '10px 20px';
-  btn.style.border = 'none';
-  btn.style.borderRadius = '8px';
-  btn.style.backgroundColor = '#575472';
-  btn.style.color = '#fff';
-  btn.style.cursor = 'pointer';
+  const btnPDF = document.createElement('button');
+  btnPDF.textContent = '📄 Descargar en PDF';
+  btnPDF.style.marginTop = '20px';
+  btnPDF.style.marginRight = '10px';
+  btnPDF.style.padding = '10px 20px';
+  btnPDF.style.border = 'none';
+  btnPDF.style.borderRadius = '8px';
+  btnPDF.style.backgroundColor = '#575472';
+  btnPDF.style.color = '#fff';
+  btnPDF.style.cursor = 'pointer';
 
-  btn.onclick = () => {
+  btnPDF.onclick = () => {
     const element = document.getElementById('ticketContenido');
     const qrImg = element.querySelector('img');
 
-    // Esperar a que cargue el QR
     if (qrImg.complete) {
       generarPDF(element);
     } else {
@@ -79,22 +79,28 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
     }).from(element).save();
   }
 
-  document.body.appendChild(btn);
+  // Botón para volver a la pantalla de bienvenida
+  const btnVolver = document.createElement('button');
+  btnVolver.textContent = '🔄 Volver al inicio';
+  btnVolver.style.marginTop = '20px';
+  btnVolver.style.padding = '10px 20px';
+  btnVolver.style.border = 'none';
+  btnVolver.style.borderRadius = '8px';
+  btnVolver.style.backgroundColor = '#44415f';
+  btnVolver.style.color = '#fff';
+  btnVolver.style.cursor = 'pointer';
 
-  // Botón para volver a productos
-  const volverBtn = document.createElement('a');
-  volverBtn.textContent = '← Volver a productos';
-  volverBtn.href = 'productos.html';
-  volverBtn.style.display = 'inline-block';
-  volverBtn.style.marginTop = '20px';
-  volverBtn.style.marginLeft = '12px';
-  volverBtn.style.padding = '8px 16px';
-  volverBtn.style.borderRadius = '8px';
-  volverBtn.style.backgroundColor = '#575472';
-  volverBtn.style.color = '#fff';
-  volverBtn.style.textDecoration = 'none';
-  volverBtn.style.fontWeight = 'bold';
+  btnVolver.onclick = () => {
+    // Limpia el localStorage (reinicio de autoservicio)
+    localStorage.clear();
+    // Redirige a pantalla de bienvenida
+    window.location.href = 'bienvenida.html'; // Ajustalo si tu pantalla de bienvenida tiene otro nombre
+  };
 
-  document.body.appendChild(volverBtn);
+  const botones = document.createElement('div');
+  botones.style.marginTop = '20px';
+  botones.style.display = 'flex';
+  botones.appendChild(btnPDF);
+  botones.appendChild(btnVolver);
+  document.body.appendChild(botones);
 }
-
