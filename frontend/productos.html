@@ -22,10 +22,25 @@
   </header>
 
   <!-- Banner de presentación -->
-  <section class="banner">
-    <div class="banner-content">
-      <h2>Somos <span>Views</span></h2>
-      <p>Tu espacio musical favorito para descubrir, comprar y disfrutar de la mejor música y shows en vivo.</p>
+  <!-- Banner de presentación tipo slider -->
+  <section class="banner-slider">
+    <div class="slide active" style="background-image: url('img/bannerUno.jpg');">
+      <div class="banner-content">
+        <h2>Somos <span>Views</span></h2>
+        <p>Tu espacio musical favorito para descubrir, comprar y disfrutar de la mejor música y shows en vivo.</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('img/banner5.png');">
+      <div class="banner-content">
+        <h2>Viví la <span>experiencia en vivo</span></h2>
+        <p>Accedé a los mejores shows y bandas desde donde estés.</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('img/banner6.jpg');">
+      <div class="banner-content">
+        <h2>Todo para los <span>fans</span></h2>
+        <p>Álbumes y entradas en un solo lugar. ¡Disfrutá tu pasión!</p>
+      </div>
     </div>
   </section>
 
@@ -42,6 +57,17 @@
   <footer class="footer">
     <p>© 2025 Views — Todos los derechos reservados</p>
   </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 3000); // Cambia cada 5 segundos
+  </script>
 
   <script src="js/productos.js"></script>
 </body>
