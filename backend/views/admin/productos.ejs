@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Gestión de Productos</title>
   <link rel="stylesheet" href="/css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="logo">
@@ -37,10 +38,10 @@
             <td>$<%= prod.precio %></td>
             <td><%= prod.activo ? 'Sí' : 'No' %></td>
             <td>
-              <a href="/admin/productos/<%= prod.id %>/editar">Editar</a>
+              <a href="/admin/productos/<%= prod.id %>/editar" class="btn">Editar</a>
 
-              <form action="/admin/productos/<%= prod.id %>/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Seguro que querés eliminar este producto?');">
-                <button type="submit">Eliminar</button>
+              <form action="/admin/productos/<%= prod.id %>/eliminar" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-secundario">Eliminar</button>
               </form>
             </td>
           </tr>
@@ -48,6 +49,29 @@
       </tbody>
     </table>
   <% } %>
+
+  <script>
+    document.querySelectorAll('form[method="POST"]').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita el envío por ahora
+
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "Esta acción no se puede deshacer.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#aaa',
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit(); // Envía el formulario si confirma
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 
