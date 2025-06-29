@@ -8,6 +8,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
   contenedor.id = 'ticketContenido';
   contenedor.style.maxWidth = '600px';
   contenedor.style.margin = '0 auto';
+  contenedor.style.marginTop = '30px';
   contenedor.style.backgroundColor = '#fff';
   contenedor.style.padding = '20px';
   contenedor.style.borderRadius = '12px';
@@ -49,7 +50,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
   // Botón de descarga PDF
   const btnPDF = document.createElement('button');
   btnPDF.textContent = 'Descargar en PDF';
-  btnPDF.style.marginTop = '20px';
+  btnPDF.style.marginTop = '10px';
   btnPDF.style.marginRight = '10px';
   btnPDF.style.padding = '10px 20px';
   btnPDF.style.border = 'none';
@@ -82,7 +83,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
   // Botón para volver a la pantalla de bienvenida
   const btnVolver = document.createElement('button');
   btnVolver.textContent = 'Volver al inicio';
-  btnVolver.style.marginTop = '20px';
+  btnVolver.style.marginTop = '10px';
   btnVolver.style.padding = '10px 20px';
   btnVolver.style.border = 'none';
   btnVolver.style.borderRadius = '8px';

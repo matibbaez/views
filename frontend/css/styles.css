@@ -13,7 +13,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #f6f7fb;
   color: #222;
-  padding: 20px;
+  padding: 0px;
   text-align: center;
 }
 
@@ -67,8 +67,23 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 30px; 
   margin-bottom: 10px;
+  margin-top: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: transparent;
+  transition: 
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    padding 0.4s ease;
+}
+
+.header.scrolled {
+  background-color: #f6f7fb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 20px 40px; 
 }
 
 .header .logo img {
@@ -193,7 +208,7 @@ select {
 /* ========== SLIDER ALTERNATIVO (si usás varias imágenes) ========== */
 .banner-slider {
   position: relative;
-  height: 50vh;
+  height: 60vh;
   overflow: hidden;
   margin-bottom: 30px;
 }
