@@ -48,7 +48,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
 
   // Botón de descarga PDF
   const btnPDF = document.createElement('button');
-  btnPDF.textContent = '📄 Descargar en PDF';
+  btnPDF.textContent = 'Descargar en PDF';
   btnPDF.style.marginTop = '20px';
   btnPDF.style.marginRight = '10px';
   btnPDF.style.padding = '10px 20px';
@@ -81,7 +81,7 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
 
   // Botón para volver a la pantalla de bienvenida
   const btnVolver = document.createElement('button');
-  btnVolver.textContent = '🔄 Volver al inicio';
+  btnVolver.textContent = 'Volver al inicio';
   btnVolver.style.marginTop = '20px';
   btnVolver.style.padding = '10px 20px';
   btnVolver.style.border = 'none';
@@ -94,12 +94,15 @@ if (!datos || !datos.productos || datos.productos.length === 0) {
     // Limpia el localStorage (reinicio de autoservicio)
     localStorage.clear();
     // Redirige a pantalla de bienvenida
-    window.location.href = 'bienvenida.html'; // Ajustalo si tu pantalla de bienvenida tiene otro nombre
+    window.location.href = 'bienvenida.html'; 
   };
 
   const botones = document.createElement('div');
   botones.style.marginTop = '20px';
   botones.style.display = 'flex';
+  botones.style.justifyContent = 'center';  
+  botones.style.gap = '5px';               
+  botones.style.flexWrap = 'wrap';  
   botones.appendChild(btnPDF);
   botones.appendChild(btnVolver);
   document.body.appendChild(botones);

@@ -4,23 +4,29 @@
   <meta charset="UTF-8">
   <title>Bienvenido - Views</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/bienvenida.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="pantalla-centro">
-  <h1>🎵 Views</h1>
-  <p>Ingresá tu nombre para comenzar</p>
-  <input type="text" id="nombre" placeholder="Tu nombre...">
-  <button onclick="continuar()">Continuar</button>
+<body>
+  <div class="slider-fondo">
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('img/bannerUno.jpg');"></div>
+    <div class="slide" style="background-image: url('img/afterHours2.jpg');"></div>
+    <div class="slide" style="background-image: url('img/banner5.png');"></div>
+    <div class="slide" style="background-image: url('img/afterHours.jpg');"></div>
 
-  <script>
-    function continuar() {
-      const nombre = document.getElementById('nombre').value;
-      if (nombre.trim() === '') {
-        alert('Ingresá un nombre válido');
-        return;
-      }
-      localStorage.setItem('nombreCliente', nombre);
-      window.location.href = 'productos.html';
-    }
-  </script>
+    <!-- Overlay -->
+    <div class="overlay">
+      <img src="img/ViewsWhite.png" alt="Logo Views">
+      <input type="text" id="nombre" placeholder="Tu nombre...">
+      <p>Ingresá tu nombre para comenzar</p>
+      <button onclick="continuar()">Continuar</button>
+    </div>
+  </div>
+
+  <script src="js/bienvenida.js"></script>
 </body>
 </html>
+
+
+
