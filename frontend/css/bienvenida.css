@@ -56,14 +56,14 @@ html, body {
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
+  font-size: .95rem;
   width: 300px;
   margin-bottom: 16px;
 }
 
 .overlay button {
   padding: 10px 24px;
-  font-size: 1rem;
+  font-size: .8rem;
   font-weight: 600;
   background-color: #575472;
   color: white;

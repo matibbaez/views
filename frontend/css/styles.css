@@ -115,6 +115,7 @@ select {
   background-color: #575472;
   color: white;
   padding: 8px 10px;
+  font-size: 13px;
   border-radius: 8px;
   margin-left: 10px;
   font-weight: 600;
@@ -128,8 +129,18 @@ select {
   padding: 2px 8px;
   font-size: 0.8rem;
   position: relative;
-  top: -2px;
   left: 4px;
+}
+
+/* ========== BOTON CERRAR SESIÓN ========== */
+
+.cerrar-sesion {
+  background-color: #d9534f;
+  font-size: 13px;
+}
+
+.cerrar-sesion:hover {
+  background-color: #c9302c;
 }
 
 /* ========== BANNER HOME / SLIDER ========== */
@@ -388,10 +399,3 @@ ul {
   justify-content: center;
   height: 100vh;
 }
-
-
-
-
-
-
-

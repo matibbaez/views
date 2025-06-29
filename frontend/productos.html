@@ -16,12 +16,12 @@
     <div class="bienvenida">
       <span>Bienvenido, <span id="clienteNombre"></span></span>
       <a href="carrito.html" class="btn-carrito">
-      Carrito: <span id="contadorCarrito">0</span>
-    </a>
+        Carrito: <span id="contadorCarrito">0</span>
+      </a>
+      <button id="btnCerrarSesion" class="btn-carrito cerrar-sesion">Cerrar sesión</button>
     </div>
   </header>
 
-  <!-- Banner de presentación -->
   <!-- Banner de presentación tipo slider -->
   <section class="banner-slider">
     <div class="slide active" style="background-image: url('img/bannerUno.jpg');">
@@ -58,17 +58,8 @@
     <p>© 2025 Views — Todos los derechos reservados</p>
   </footer>
 
-  <script>
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
-
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 2000); // Cambia cada 5 segundos
-  </script>
-
   <script src="js/productos.js"></script>
+  <script src="js/visual/slider.js"></script>
+  <script src="js/visual/session.js"></script>
 </body>
 </html>
