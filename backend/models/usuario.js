@@ -1,12 +1,10 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+import { Model } from 'sequelize';
+import bcrypt from 'bcryptjs';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Usuario extends Model {
     static associate(models) {
-      // define association here
+      // No hay relaciones por ahora
     }
   }
 
@@ -19,9 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Usuario',
   });
 
-  // Hook que encripta la contraseña antes de crear
   Usuario.beforeCreate(async (usuario) => {
-    const bcrypt = require('bcryptjs'); 
     const salt = await bcrypt.genSalt(10);
     usuario.password = await bcrypt.hash(usuario.password, salt);
   });

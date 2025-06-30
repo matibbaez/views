@@ -1,12 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcrypt');
-const path = require('path');
-const multer = require('multer');
+import express from 'express';
+import bcrypt from 'bcrypt';
+import path from 'path';
+import multer from 'multer';
+import { fileURLToPath } from 'url';
 
-const { Usuario, Producto, Venta, DetalleVenta } = require('../models');
-const authMiddleware = require('../middlewares/authMiddleware');
-const validarProducto = require('../middlewares/validacionesProducto');
+import { Usuario, Producto, Venta, DetalleVenta } from '../models/index.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import validarProducto from '../middlewares/validacionesProducto.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const router = express.Router();
 
 // Configuración de multer
 const storage = multer.diskStorage({
@@ -139,5 +144,4 @@ router.get('/ventas', authMiddleware, async (req, res) => {
   res.render('admin/ventas', { ventas });
 });
 
-module.exports = router;
-
+export default router;

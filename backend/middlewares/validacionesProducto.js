@@ -1,6 +1,5 @@
-module.exports = (req, res, next) => {
+export default function validarProducto(req, res, next) {
   const { nombre, precio, tipo } = req.body;
-
   const errores = [];
 
   if (!nombre || nombre.trim().length < 2) {
@@ -20,4 +19,4 @@ module.exports = (req, res, next) => {
   }
 
   next();
-};
+}
