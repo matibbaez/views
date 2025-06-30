@@ -1,23 +1,47 @@
 const nombre = localStorage.getItem('nombreCliente');
 document.getElementById('clienteNombre').textContent = nombre ?? 'Cliente';
 
+let paginaActual = 1;
+let tipoActual = 'albumes';
+const LIMITE = 12;
+
 function mostrar(tipo) {
+  tipoActual = tipo;
+  paginaActual = 1;
+
   document.getElementById('albumes').style.display = tipo === 'albumes' ? 'flex' : 'none';
   document.getElementById('entradas').style.display = tipo === 'entradas' ? 'flex' : 'none';
+  document.getElementById('paginacionAlbumes').style.display = tipo === 'albumes' ? 'flex' : 'none';
+  document.getElementById('paginacionEntradas').style.display = tipo === 'entradas' ? 'flex' : 'none';
 
   document.getElementById('btnAlbumes').classList.toggle('active', tipo === 'albumes');
   document.getElementById('btnEntradas').classList.toggle('active', tipo === 'entradas');
+
+  cargarProductos(tipo, paginaActual);
 }
 
-fetch('http://localhost:3000/api/productos')
-  .then(res => res.json())
-  .then(data => {
-    const contAlbumes = document.getElementById('albumes');
-    const contEntradas = document.getElementById('entradas');
+async function cargarProductos(tipo, pagina) {
+  const contenedor = document.getElementById(tipo);
+  const paginacion = document.getElementById(`paginacion${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`);
+  const loader = document.getElementById(`loader${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`);
 
-    data.forEach(prod => {
-      if (!prod.activo) return;
+  contenedor.innerHTML = ''; 
+  contenedor.appendChild(loader); 
+  loader.style.display = 'block';
+  paginacion.innerHTML = '';
 
+  // Esperamos para simular carga
+  await new Promise(resolve => setTimeout(resolve, 600));
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/productos?tipo=${tipo === 'albumes' ? 'album' : 'entrada'}&limit=${LIMITE}&page=${pagina}`);
+    const data = await res.json();
+
+    if (!Array.isArray(data.productos)) return;
+
+    loader.style.display = 'none'; 
+
+    data.productos.forEach(prod => {
       const card = document.createElement('div');
       card.className = 'producto';
       card.innerHTML = `
@@ -29,11 +53,10 @@ fetch('http://localhost:3000/api/productos')
         <button>Agregar al carrito</button>
       `;
 
-      const boton = card.querySelector('button');
-      boton.addEventListener('click', () => {
+      card.querySelector('button').addEventListener('click', () => {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
         const existente = carrito.find(item => item.id === prod.id);
+
         if (existente) {
           existente.cantidad += 1;
         } else {
@@ -49,7 +72,7 @@ fetch('http://localhost:3000/api/productos')
         actualizarContador();
         Swal.fire({
           toast: true,
-          position: 'bottom-end', 
+          position: 'bottom-end',
           icon: 'success',
           title: `${prod.nombre} agregado al carrito`,
           showConfirmButton: false,
@@ -63,21 +86,44 @@ fetch('http://localhost:3000/api/productos')
         });
       });
 
-      // Insertamos según tipo
-      if (prod.tipo === 'album') {
-        contAlbumes.appendChild(card);
-      } else if (prod.tipo === 'entrada') {
-        contEntradas.appendChild(card);
-      }
+      contenedor.appendChild(card);
     });
-  });
 
-  function actualizarContador() {
+    // Paginación
+    if (data.totalPages > 1) {
+      if (pagina > 1) {
+        const prev = document.createElement('button');
+        prev.textContent = '⬅ Anterior';
+        prev.onclick = () => {
+          paginaActual--;
+          cargarProductos(tipoActual, paginaActual);
+        };
+        paginacion.appendChild(prev);
+      }
+
+      if (pagina < data.totalPages) {
+        const sig = document.createElement('button');
+        sig.textContent = 'Siguiente ⮕';
+        sig.onclick = () => {
+          paginaActual++;
+          cargarProductos(tipoActual, paginaActual);
+        };
+        paginacion.appendChild(sig);
+      }
+    }
+
+  } catch (err) {
+    console.error('Error al cargar productos:', err);
+    loader.style.display = 'none';
+  }
+}
+
+function actualizarContador() {
   const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
   const totalCantidad = carrito.reduce((sum, item) => sum + item.cantidad, 0);
   document.getElementById('contadorCarrito').textContent = totalCantidad;
 }
 
-// Mostrar el número al cargar la página
+// Inicial
 actualizarContador();
-
+mostrar('albumes');

@@ -1,4 +1,3 @@
-// server.js
 import app from './app.js';
 import envs from './config/envs.js';
 import './config/db.js'; // para conectar a la base de datos

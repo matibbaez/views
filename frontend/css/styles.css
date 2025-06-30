@@ -414,3 +414,63 @@ ul {
   justify-content: center;
   height: 100vh;
 }
+
+/* ========== PAGINACION DE PRODUCTOS ========== */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.paginacion .button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ddd;
+  color: #575472;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.paginacion button:hover {
+  background-color: #666;
+}
+
+/* ========== ANIMACION DE LA PAGINACION ========== */
+.grid.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.grid.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* ========== SPINNER ========== */
+.loader-local {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top: 6px solid #575472;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 60px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top: 6px solid #575472;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+

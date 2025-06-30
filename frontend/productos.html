@@ -50,9 +50,15 @@
     <button class="tab" id="btnEntradas" onclick="mostrar('entradas')">Entradas</button>
   </div>
 
-  <!-- Grids de productos -->
-  <div id="albumes" class="grid"></div>
-  <div id="entradas" class="grid" style="display: none;"></div>
+  <div id="albumes" class="grid">
+    <div class="loader-local" id="loaderAlbumes" style="display: none;"></div>
+  </div>
+  <div id="paginacionAlbumes" class="paginacion"></div>
+
+  <div id="entradas" class="grid" style="display: none;">
+    <div class="loader-local" id="loaderEntradas" style="display: none;"></div>
+  </div>
+  <div id="paginacionEntradas" class="paginacion" style="display: none;"></div>
 
   <footer class="footer">
     <p>© 2025 Views — Todos los derechos reservados</p>

@@ -1,12 +1,23 @@
-// backend/controllers/api.controller.js
 import { getAllProductos } from '../services/producto.service.js';
 import { registrarVenta as registrarVentaService } from '../services/venta.service.js';
 
 export const getProductos = async (req, res) => {
   try {
-    const productos = await getAllProductos();
-    res.json(productos);
+    const limit = parseInt(req.query.limit) || 12;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * limit;
+    const tipo = req.query.tipo;
+
+    const { productos, total } = await getAllProductos({ limit, offset, tipo });
+
+    res.json({
+      productos,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (err) {
+    console.error('❌ ERROR EN getProductos:', err);
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 };
