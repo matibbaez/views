@@ -13,12 +13,17 @@ function aplicarTema(tema) {
       ? 'img/ViewsWhite.png'
       : 'img/ViewsLogoFinal.png';
   }
+
+  // Cambiar texto del botón según el tema
+  if (btnTema) {
+    btnTema.textContent = tema === 'tema-oscuro' ? '☀️' : '🌙';
+  }
 }
 
-// Al cargar la página
+// Al cargar la página, aplicar el tema guardado o claro por defecto
 aplicarTema(temaGuardado || 'tema-claro');
 
-// Al hacer clic en el botón
+// Evento al hacer clic en el botón de cambio de tema
 btnTema?.addEventListener('click', () => {
   const nuevoTema = body.classList.contains('tema-claro') ? 'tema-oscuro' : 'tema-claro';
   aplicarTema(nuevoTema);

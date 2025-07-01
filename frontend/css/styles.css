@@ -133,6 +133,19 @@ select {
   font-size: 13px;
   border-radius: 8px;
   margin-left: 10px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  position: relative;
+}
+
+.btn-tema {
+  text-decoration: none;
+  background-color: #575472;
+  color: white;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: 80px;
+  margin-left: 10px;
   font-weight: 600;
   position: relative;
 }
@@ -149,12 +162,19 @@ select {
 
 /* ========== BOTON CERRAR SESIÓN ========== */
 
-.cerrar-sesion {
+.btn-cerrar-sesion {
   background-color: #d9534f;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-left: 10px;
+  font-weight: 600;
+  position: relative;
   font-size: 13px;
+  transition: all 0.3s ease;
 }
 
-.cerrar-sesion:hover {
+.btn-cerrar-sesion:hover {
   background-color: #c9302c;
 }
 
@@ -544,3 +564,6 @@ ul {
 .tema-oscuro .cerrar-sesion:hover {
   background-color: #3f3c58;
 }
+
+
+
