@@ -11,6 +11,7 @@ Consiste en un sistema de **autoservicio** dividido en dos partes: un **frontend
 
 ## 📁 Estructura del Proyecto
 
+```plaintext
 📁 Views
 ├── backend/
 │   ├── config/          
@@ -46,6 +47,7 @@ Consiste en un sistema de **autoservicio** dividido en dos partes: un **frontend
 ├── .gitignore
 ├── package-lock.json
 └── README.md
+```
 
 ---
 
