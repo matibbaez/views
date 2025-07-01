@@ -474,3 +474,73 @@ ul {
   animation: spin 1s linear infinite;
 }
 
+/* ========== TEMAS: CLARO y OSCURO ========== */
+.tema-claro {
+  background-color: #f6f7fb;
+  color: #222;
+}
+
+.tema-claro .header,
+.tema-claro .footer {
+  background-color: #f6f7fb;
+  color: #222;
+}
+
+.tema-claro .producto {
+  background: linear-gradient(145deg, #ffffff, #e6e6ec);
+  box-shadow: 8px 8px 16px #d1d1d8, -8px -8px 16px #ffffff;
+}
+
+.tema-claro .producto button {
+  background-color: #575472;
+  color: #fff;
+}
+
+/* Tema Oscuro */
+.tema-oscuro {
+  background-color: #1e1e2f;
+  color: #eee;
+}
+
+.tema-oscuro .header,
+.tema-oscuro .footer {
+  background-color: #1e1e2f;
+  color: #eee;
+}
+
+.tema-oscuro .producto {
+  background: #2c2c3c;
+  box-shadow: 4px 4px 8px #1a1a26, -4px -4px 8px #353546;
+}
+
+.tema-oscuro .producto button {
+  background-color: #8884ff;
+  color: #fff;
+}
+
+.tema-oscuro span {
+  color: #fff; 
+}
+
+.tema-oscuro h1 {
+  color: #fff; 
+}
+
+.tema-oscuro span#total  {
+  color: #fff; 
+}
+
+.tema-oscuro #ticketContenido  {
+  color: #222; 
+}
+
+.tema-oscuro .btn-carrito,
+.tema-oscuro .cerrar-sesion {
+  background-color: #575472;
+  color: #fff;
+}
+
+.tema-oscuro .btn-carrito:hover,
+.tema-oscuro .cerrar-sesion:hover {
+  background-color: #3f3c58;
+}
