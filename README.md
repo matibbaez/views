@@ -1,4 +1,7 @@
 # Views / Trabajo Integrador – Programación III
+
+![Logo](./images/ViewsLogo.png)
+
 ## Sistema de Autoservicio – Gestión de Productos y Ventas
 
 Este proyecto fue desarrollado como parte del **Trabajo Práctico Integrador** de la materia **Programación III**.  
@@ -8,10 +11,41 @@ Consiste en un sistema de **autoservicio** dividido en dos partes: un **frontend
 
 ## 📁 Estructura del Proyecto
 
-/backend
-/frontend
-/images
-README.md
+📁 Views
+├── backend/
+│   ├── config/          
+│   ├── controllers/          
+│   ├── middlewares/               
+│   ├── migrations/               
+│   ├── models/               
+│   ├── node_modules/               
+│   ├── public/               
+│   ├── routes/                
+│   ├── seeders/                
+│   ├── services/                
+│   ├── uploads/                
+│   ├── views/                
+│   ├── .env          
+│   ├── app.js           
+│   ├── database.sqlite             
+│   ├── package-lock.json                
+│   ├── package.json                
+│   ├── server.js                               
+│   └── ...
+├── frontend/
+│   ├── css/                  
+│   ├── img/                  
+│   ├── js/                              
+│   ├── bienvenida.html            
+│   ├── carrito.html            
+│   ├── productos.html            
+│   ├── ticket.html            
+│   └── ...
+├── images/                   
+├── node_modules/                      
+├── .gitignore
+├── package-lock.json
+└── README.md
 
 ---
 
