@@ -1,9 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import path from 'path';
-import multer from 'multer';
 import { fileURLToPath } from 'url';
-
+import upload from '../middlewares/uploadMiddleware.js';
+import path from 'path';
 import { Usuario, Producto, Venta, DetalleVenta } from '../models/index.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import validarProducto from '../middlewares/validacionesProducto.js';
@@ -12,16 +11,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
-
-// Configuración de multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads'),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + ext);
-  }
-});
-const upload = multer({ storage });
 
 // --- LOGIN ---
 router.get('/login', (req, res) => {
@@ -79,7 +68,17 @@ router.get('/productos/nuevo', authMiddleware, (req, res) => {
   res.render('admin/producto-form', { producto: null });
 });
 
-router.post('/productos', authMiddleware, upload.single('imagen'), validarProducto, async (req, res) => {
+router.post('/productos', authMiddleware, (req, res, next) => {
+  upload.single('imagen')(req, res, (err) => {
+    if (err) {
+      return res.render('admin/producto-form', {
+        producto: null,
+        error: err.message
+      });
+    }
+    next();
+  });
+}, validarProducto, async (req, res) => {
   const datos = req.body;
   const imagen = req.file ? req.file.filename : null;
 
@@ -102,7 +101,17 @@ router.get('/productos/:id/editar', authMiddleware, async (req, res) => {
   res.render('admin/producto-form', { producto });
 });
 
-router.post('/productos/:id', authMiddleware, upload.single('imagen'), async (req, res, next) => {
+router.post('/productos/:id', authMiddleware, (req, res, next) => {
+  upload.single('imagen')(req, res, (err) => {
+    if (err) {
+      return res.render('admin/producto-form', {
+        producto: req.producto || null,
+        error: err.message
+      });
+    }
+    next();
+  });
+}, async (req, res, next) => {
   const producto = await Producto.findByPk(req.params.id);
   if (!producto) return res.redirect('/admin/productos');
   req.producto = producto;
