@@ -1,5 +1,5 @@
 export default function validarProducto(req, res, next) {
-  const { nombre, precio, tipo } = req.body;
+  const { nombre, precio, tipo, fechaShow } = req.body;
   const errores = [];
 
   if (!nombre || nombre.trim().length < 2) {
@@ -14,8 +14,25 @@ export default function validarProducto(req, res, next) {
     errores.push('El tipo debe ser "album" o "entrada".');
   }
 
+  if (tipo === 'entrada') {
+    if (!fechaShow) {
+      errores.push('La fecha del show es obligatoria para entradas.');
+    } else {
+      const fecha = new Date(fechaShow);
+      const hoy = new Date();
+      hoy.setHours(0,0,0,0);
+
+      if (fecha < hoy) {
+        errores.push('La fecha del show no puede ser anterior a hoy.');
+      }
+    }
+  }
+
   if (errores.length > 0) {
-    return res.status(400).json({ success: false, errores });
+    return res.render('admin/producto-form', {
+      producto: { ...req.body, id: null },
+      errores
+    });
   }
 
   next();

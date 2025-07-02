@@ -12,12 +12,19 @@
 
   <div class="card card-form">
     <h1><%= producto ? 'Editar' : 'Nuevo' %> Producto</h1>
+    <% if (typeof errores !== 'undefined' && errores.length > 0) { %>
+      <div class="error-messages">
+        <% errores.forEach(function(error) { %>
+          <p class="error"><%= error %></p>
+        <% }); %>
+      </div>
+    <% } %>
 
     <% if (typeof error !== 'undefined' && error) { %>
       <p class="error"><%= error %></p>
     <% } %>
 
-    <form action="<%= producto ? '/admin/productos/' + producto.id : '/admin/productos' %>" method="POST" enctype="multipart/form-data">
+    <form action="<%= producto && producto.id ? '/admin/productos/' + producto.id : '/admin/productos' %>" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="tipo">Tipo:</label>
         <select name="tipo" id="tipo" required>
@@ -41,9 +48,9 @@
         <input type="number" name="precio" id="precio" required step="0.01" value="<%= producto ? producto.precio : '' %>">
       </div>
 
-      <div class="form-group">
-        <label for="fechaShow">Fecha del show (solo entradas):</label>
-        <input type="date" name="fechaShow" id="fechaShow" value="<%= producto && producto.fechaShow ? producto.fechaShow.toISOString().split('T')[0] : '' %>">
+      <div class="form-group" id="fechaShowGroup" style="display: none;">
+        <label for="fechaShow">Fecha del show:</label>
+        <input type="date" name="fechaShow" id="fechaShow" min="<%= new Date().toISOString().split('T')[0] %>" value="<%= producto && producto.fechaShow ? producto.fechaShow.toISOString().split('T')[0] : '' %>">
       </div>
 
       <div class="form-group">
@@ -68,6 +75,23 @@
       </div>
     </form>
   </div>
+
+  <script>
+    const tipoSelect = document.getElementById('tipo');
+    const fechaShowGroup = document.getElementById('fechaShowGroup');
+
+    function toggleFechaShow() {
+      if (tipoSelect.value === 'entrada') {
+        fechaShowGroup.style.display = 'block';
+      } else {
+        fechaShowGroup.style.display = 'none';
+      }
+    }
+
+    tipoSelect.addEventListener('change', toggleFechaShow);
+    window.addEventListener('DOMContentLoaded', toggleFechaShow);
+  </script>
+
 </body>
 </html>
 
