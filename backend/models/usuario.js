@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 export default (sequelize, DataTypes) => {
   class Usuario extends Model {
     static associate(models) {
-      // No hay relaciones por ahora
+      // No hay relaciones 
     }
   }
 

@@ -10,6 +10,11 @@ const basename = path.basename(__filename);
 
 const db = {};
 
+// Para no tener que importar y configurar manualmente cada modelo Sequelize:
+// - Importa cada modelo y lo inicializa con la conexión Sequelize.
+// - Automatizar el registro y la gestión de modelos Sequelize.
+// - Define relaciones entre modelos associate().
+
 const modelFiles = fs
   .readdirSync(__dirname)
   .filter(file =>
