@@ -64,7 +64,8 @@ async function cargarProductos(tipo, pagina) {
             id: prod.id,
             nombre: prod.nombre,
             precio: prod.precio,
-            cantidad: 1
+            cantidad: 1,
+            imagen: `../backend/uploads/${prod.imagen}`
           });
         }
 

@@ -19,7 +19,6 @@ body {
 
 h1 {
   font-size: 2rem;
-  margin-bottom: 20px;
   color: #333;
 }
 
@@ -618,4 +617,131 @@ ul {
   button {
     font-size: 20px;
   }
+}
+
+/* Nuevo diseño carrito */
+
+.listado-carrito {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.item-carrito {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  gap: 20px;
+  width: 90%;
+  max-width: 700px;
+}
+
+.img-carrito {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.info-carrito {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+.tema-oscuro .info-carrito {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  justify-content: flex-start;
+  color: #1a1a26;
+}
+
+.info-carrito h3,
+.info-carrito p {
+  margin-left: 10px;
+  line-height: 1.4;
+}
+
+.info-carrito p {
+  margin: 4px 0;
+}
+
+.info-carrito .cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.controles-carrito {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f0f0f0;
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+.btn-cantidad {
+  background-color: #575472;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 27px;
+  height: 31px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cantidad:hover {
+  background-color: #3f3c58;
+}
+
+.cantidad-num {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: .9rem;
+}
+
+.tema-oscuro .cantidad-num {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: .9rem;
+  color: #1a1a26;
+}
+
+.btn-eliminar {
+  background-color: #d9534f;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-weight: 600;
+  position: relative;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #c9302c;
 }

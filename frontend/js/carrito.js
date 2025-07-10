@@ -13,18 +13,26 @@ function renderCarrito() {
     total += item.precio * item.cantidad;
 
     const div = document.createElement('div');
-    div.className = 'producto';
-    div.innerHTML = `
+      div.className = 'item-carrito';
+      div.innerHTML = `
+    <img src="${item.imagen}" alt="${item.nombre}" class="img-carrito">
+    <div class="info-carrito">
       <h3>${item.nombre}</h3>
-      <p>Precio: $${item.precio}</p>
+      <p>Precio unitario: $${item.precio}</p>
+      <p>Subtotal: $${(item.precio * item.cantidad).toFixed(2)}</p>
+    </div>
+    <div class="controles-carrito">
       <div class="cantidad">
-        <button onclick="cambiarCantidad(${index}, -1)">−</button>
-        <span>${item.cantidad}</span>
-        <button onclick="cambiarCantidad(${index}, 1)">+</button>
+        <button class="btn-cantidad" onclick="cambiarCantidad(${index}, -1)">−</button>
+        <span class="cantidad-num">${item.cantidad}</span>
+        <button class="btn-cantidad" onclick="cambiarCantidad(${index}, 1)">+</button>
       </div>
-      <button class="eliminar" onclick="eliminarProducto(${index})">Eliminar</button>
-      <hr>
-    `;
+      <button class="btn-eliminar">
+        Eliminar
+      </button>
+    </div>
+  `;
+
 
     contenedor.appendChild(div);
   });
