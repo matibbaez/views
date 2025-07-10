@@ -124,7 +124,7 @@ Solicita al usuario su nombre antes de iniciar el proceso de compra.
 
 ---
 
-### Inicio (Cliente)
+### 🏠 Inicio (Cliente)
 
 Inicio de Views.
 
