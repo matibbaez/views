@@ -1,9 +1,13 @@
 export default function validarProducto(req, res, next) {
-  const { nombre, precio, tipo, fechaShow } = req.body;
+  const { nombre, precio, tipo, fechaShow, artista } = req.body;
   const errores = [];
 
   if (!nombre || nombre.trim().length < 2) {
     errores.push('El nombre del producto es obligatorio y debe tener al menos 2 caracteres.');
+  }
+
+  if (!artista || artista.trim().length < 2) {
+    errores.push('El nombre del artista es obligatorio y debe tener al menos 2 caracteres.');
   }
 
   if (!precio || isNaN(precio) || precio <= 0) {
