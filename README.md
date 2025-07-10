@@ -1,6 +1,6 @@
-# Views / Trabajo Integrador – Programación III
+# Views – Programación III
 
-![Logo](./images/ViewsLogo.png)
+![Logo](./images/ViewsWhite.png)
 
 ## Sistema de Autoservicio – Gestión de Productos y Ventas
 
