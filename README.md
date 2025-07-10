@@ -144,7 +144,7 @@ Muestra productos por categorías, con paginación, tema configurable y botón p
 
 Permite modificar cantidades, eliminar productos y confirmar la compra. Incluye confirmación por modal.
 
-![Carrito](./images/carritoViews.png)
+![Carrito](./images/carritoNuevoViews.png)
 
 ---
 
