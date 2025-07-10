@@ -36,8 +36,20 @@ function continuar() {
     return;
   }
 
+  // Validación: al menos 2 letras (después de quitar espacios)
+  const letrasSolamente = nombre.replace(/\s/g, '');
+  if (letrasSolamente.length < 2) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Nombre muy corto',
+      text: 'Ingresá al menos dos letras.',
+      confirmButtonColor: '#575472'
+    });
+    nombreInput.focus();
+    return;
+  }
+
   // Si todo está bien, guardar y continuar
   localStorage.setItem('nombreCliente', nombre);
   window.location.href = 'productos.html';
 }
-
