@@ -128,7 +128,7 @@ Solicita al usuario su nombre antes de iniciar el proceso de compra.
 
 Inicio de Views.
 
-![Bienvenida](./images/productosViews.png)
+![Bienvenida](./images/home1Views.png)
 
 ---
 
@@ -136,7 +136,7 @@ Inicio de Views.
 
 Muestra productos por categorías, con paginación, tema configurable y botón para cambiar entre claro/oscuro.
 
-![Productos](./images/paginacionViews.png)
+![Productos](./images/homeViews.png)
 
 ---
 
