@@ -565,5 +565,57 @@ ul {
   background-color: #3f3c58;
 }
 
+/* Móviles (hasta 576px) */
+@media (max-width: 576px) {
+  .banner-slider {
+    height: 100vh;
+  }
 
+  .slide h2 {
+    font-size: 3rem;
+  }
 
+  .slide p {
+    font-size: 1.6rem;
+  }
+
+  .header {
+    padding: 40px 30px;
+  }
+
+  .header .logo img {
+    height: 60px;
+  }
+
+  .header .bienvenida {
+    font-size: 1.2rem;
+  }
+
+  .btn-carrito {
+    font-size: 1.2rem;
+  }
+
+  .btn-cerrar-sesion {
+    font-size: 1.2rem;
+  }
+
+  .btn-tema {
+    font-size: 1.2rem;
+  }
+
+  .grid {
+    gap: 40px;
+  }
+
+  .producto {
+    width: 265px;
+  }
+
+  .tab {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 20px;
+  }
+}
