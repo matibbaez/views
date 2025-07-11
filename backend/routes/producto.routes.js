@@ -5,6 +5,8 @@ import upload from '../middlewares/uploadMiddleware.js';
 import buscarProducto from '../middlewares/buscarProducto.js';
 import eliminarProducto from '../middlewares/eliminarProducto.js';
 
+import { multerErrorHandler } from '../middlewares/multerErrorHandler.js';
+
 import {
   crearProducto,
   actualizarProducto
@@ -28,6 +30,7 @@ router.post(
   '/productos',
   authMiddleware,
   upload.single('imagen'),
+  multerErrorHandler,
   validarProducto,
   crearProducto
 );
@@ -37,6 +40,7 @@ router.post(
   '/productos/:id',
   authMiddleware,
   upload.single('imagen'),
+  multerErrorHandler,
   buscarProducto,
   validarProducto,
   actualizarProducto
