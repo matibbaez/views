@@ -3,6 +3,7 @@ import session from 'express-session';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import productoRoutes from './routes/producto.routes.js';
 import apiRoutes from './routes/api.routes.js';
 import adminRoutes from './routes/admin.js';
 
@@ -30,8 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
-app.use('/api', apiRoutes);     // rutas para frontend cliente (productos, ventas)
-app.use('/admin', adminRoutes); // rutas del panel administrativo
+app.use('/api', apiRoutes);     
+app.use('/admin', adminRoutes); 
+app.use('/admin', productoRoutes);
 
 // Ruta raíz
 app.get('/', (req, res) => {

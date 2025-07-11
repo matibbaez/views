@@ -5,9 +5,10 @@ export const getProductos = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 12;
     const page = parseInt(req.query.page) || 1;
-    const offset = (page - 1) * limit;
+    const offset = (page - 1) * limit; // Desde que elemento empezar
     const tipo = req.query.tipo;
 
+    // Llamamos y pasamos los filtros
     const { productos, total } = await getAllProductos({ limit, offset, tipo });
 
     res.json({
@@ -22,9 +23,12 @@ export const getProductos = async (req, res) => {
   }
 };
 
+
+// Endpoint para registrar la venta
 export const crearVenta = async (req, res) => {
   const { nombreCliente, productos } = req.body;
 
+  // Si faltan datos
   if (!nombreCliente || !productos?.length) {
     return res.status(400).json({ error: 'Datos incompletos' });
   }
