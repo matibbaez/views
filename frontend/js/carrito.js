@@ -27,7 +27,7 @@ function renderCarrito() {
         <span class="cantidad-num">${item.cantidad}</span>
         <button class="btn-cantidad" onclick="cambiarCantidad(${index}, 1)">+</button>
       </div>
-      <button class="btn-eliminar">
+      <button class="btn-eliminar" onclick="eliminarProducto(${index})">
         Eliminar
       </button>
     </div>
