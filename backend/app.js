@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import productoRoutes from './routes/producto.routes.js';
 import apiRoutes from './routes/api.routes.js';
 import adminRoutes from './routes/admin.js';
+import methodOverride from 'method-override';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +18,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares globales
+app.use(methodOverride('_method'));
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

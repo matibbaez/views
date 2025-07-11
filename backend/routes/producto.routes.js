@@ -47,7 +47,7 @@ router.post(
 );
 
 // --- ELIMINACIÓN ---
-router.post(
+router.delete(
   '/productos/:id/eliminar',
   authMiddleware,
   eliminarProducto

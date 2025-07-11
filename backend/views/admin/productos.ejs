@@ -40,7 +40,8 @@
             <td>
               <a href="/admin/productos/<%= prod.id %>/editar" class="btn">Editar</a>
 
-              <form action="/admin/productos/<%= prod.id %>/eliminar" method="POST" style="display:inline;">
+              <!-- Acción con DELETE -->
+              <form action="/admin/productos/<%= prod.id %>/eliminar?_method=DELETE" method="POST" style="display:inline;">
                 <button type="submit" class="btn btn-secundario">Eliminar</button>
               </form>
             </td>
@@ -53,7 +54,7 @@
   <script>
     document.querySelectorAll('form[method="POST"]').forEach(form => {
       form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Evita el envío por ahora
+        e.preventDefault();
 
         Swal.fire({
           title: '¿Estás seguro?',
@@ -66,7 +67,7 @@
           cancelButtonText: 'Cancelar'
         }).then((result) => {
           if (result.isConfirmed) {
-            form.submit(); // Envía el formulario si confirma
+            form.submit();
           }
         });
       });
