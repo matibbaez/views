@@ -23,7 +23,6 @@ export const getProductos = async (req, res) => {
   }
 };
 
-
 // Endpoint para registrar la venta
 export const crearVenta = async (req, res) => {
   const { nombreCliente, productos } = req.body;
