@@ -33,7 +33,6 @@ function renderCarrito() {
     </div>
   `;
 
-
     contenedor.appendChild(div);
   });
 
@@ -45,11 +44,11 @@ function cambiarCantidad(index, cambio) {
 
   if (nuevaCantidad <= 0) {
     eliminarProducto(index);
-  } else if (nuevaCantidad > 99) {
+  } else if (nuevaCantidad > 10) {
     Swal.fire({
       icon: 'warning',
       title: 'Límite alcanzado',
-      text: 'Máximo 99 unidades por producto.',
+      text: 'Máximo 10 unidades por producto.',
       confirmButtonColor: '#575472'
     });
     return;
