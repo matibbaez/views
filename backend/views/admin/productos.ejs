@@ -39,8 +39,6 @@
             <td><%= prod.activo ? 'Sí' : 'No' %></td>
             <td>
               <a href="/admin/productos/<%= prod.id %>/editar" class="btn">Editar</a>
-
-              <!-- Acción con DELETE -->
               <form action="/admin/productos/<%= prod.id %>/eliminar?_method=DELETE" method="POST" style="display:inline;">
                 <button type="submit" class="btn btn-secundario">Eliminar</button>
               </form>
@@ -49,6 +47,15 @@
         <% }) %>
       </tbody>
     </table>
+
+    <!-- PAGINACIÓN -->
+    <div class="paginacion">
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <a href="/admin/productos?page=<%= i %>" class="<%= i === currentPage ? 'activo' : '' %>">
+          <%= i %>
+        </a>
+      <% } %>
+    </div>
   <% } %>
 
   <script>
