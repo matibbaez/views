@@ -264,7 +264,7 @@ th {
   margin-top: 2rem;
 }
 
-
+/* Paginacion productos */
 
 .paginacion {
   margin-top: 20px;
@@ -283,4 +283,43 @@ th {
 .paginacion a.activo {
   background-color: #6d6990;
   font-weight: bold;
+}
+
+/* Ventas */
+
+.venta {
+  background-color: #1e1e2f;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.venta p {
+  margin: 5px 0;
+}
+.venta ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+.paginacion {
+  text-align: center;
+  margin-top: 30px;
+}
+.paginacion a {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  background-color: #2c2c3a;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+.paginacion a.activo {
+  background-color: #575472;
+  font-weight: bold;
+}
+.paginacion a:hover {
+  background-color: #444;
 }

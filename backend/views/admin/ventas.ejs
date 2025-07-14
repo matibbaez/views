@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>Ventas</title>
   <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    
+  </style>
 </head>
 <body>
   <div class="logo">
@@ -17,22 +20,32 @@
     <p>No hay ventas registradas aún.</p>
   <% } else { %>
     <% ventas.forEach(venta => { %>
-        <div class="venta">
-            <p><strong>Cliente:</strong> <%= venta.nombreCliente %></p>
-            <p><strong>Fecha:</strong> <%= new Date(venta.fecha).toLocaleString('es-AR') %></p>
-            <p><strong>Total:</strong> $<%= venta.total %></p>
-            <p><strong>Productos:</strong></p>
-            <ul>
-            <% (venta.detalles || []).forEach(det => { %>
-                <li>
-                <%= det.producto ? det.producto.nombre : 'Producto eliminado' %> — Cantidad: <%= det.cantidad %> — Precio unitario: 
-                $<%= det.producto ? det.producto.precio : '-' %>
-                </li>
-            <% }) %>
-            </ul>
-        </div>
-        <% }) %>
+      <div class="venta">
+        <p><strong>Cliente:</strong> <%= venta.nombreCliente %></p>
+        <p><strong>Fecha:</strong> <%= new Date(venta.fecha).toLocaleString('es-AR') %></p>
+        <p><strong>Total:</strong> $<%= venta.total %></p>
+        <p><strong>Productos:</strong></p>
+        <ul>
+          <% (venta.detalles || []).forEach(det => { %>
+            <li>
+              <%= det.producto ? det.producto.nombre : 'Producto eliminado' %> — Cantidad: <%= det.cantidad %> — Precio unitario: 
+              $<%= det.producto ? det.producto.precio : '-' %>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    <% }) %>
+
+    <!-- Paginación con rango visible -->
+    <div class="paginacion">
+      <% 
+      let startPage = Math.max(1, currentPage - 4);
+      let endPage = Math.min(totalPages, currentPage + 5);
+      for (let i = startPage; i <= endPage; i++) { 
+      %>
+        <a href="/admin/ventas?page=<%= i %>" class="<%= currentPage === i ? 'activo' : '' %>"><%= i %></a>
+      <% } %>
+    </div>
   <% } %>
 </body>
 </html>
-

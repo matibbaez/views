@@ -48,14 +48,34 @@ export const renderDashboard = async (req, res) => {
 
 // --- Ventas ---
 export const renderVentas = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10;
+  // Contar total ventas sin incluir asociaciones para evitar conteo incorrecto
+  const count = await Venta.count();
+
+  const totalPages = Math.ceil(count / limit);
+
+  // Validar página en rango
+  let currentPage = page;
+  if (page < 1) currentPage = 1;
+  if (page > totalPages) currentPage = totalPages;
+
+  const offset = (currentPage - 1) * limit;
+
   const ventas = await Venta.findAll({
     include: [{
       model: DetalleVenta,
       as: 'detalles',
       include: [{ model: Producto, as: 'producto' }]
     }],
-    order: [['fecha', 'DESC']]
+    order: [['fecha', 'DESC']],
+    limit,
+    offset
   });
 
-  res.render('admin/ventas', { ventas });
+  res.render('admin/ventas', {
+    ventas,
+    currentPage,
+    totalPages
+  });
 };
