@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registros</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="/img/ViewsLogo.png" alt="Logo Views">
+  </div>
+  <h1>Estadísticas de Registros</h1>
+
+  <a href="/admin/dashboard">← Volver al dashboard</a>
+
+  <h2>📦 10 Productos Más Vendidos</h2>
+  <ul>
+    <% productosMasVendidos.forEach(item => { %>
+        <li>
+        <%= item.producto ? item.producto.nombre : 'Producto eliminado' %> — Vendidos: <%= item.get("totalVendida") %> unidades
+        </li>
+    <% }) %>
+  </ul>
+
+  <h2>💰 10 Ventas Más Caras</h2>
+  <ul>
+    <% ventasMasCaras.forEach(v => { %>
+      <li>
+        <strong><%= v.nombreCliente %></strong>
+        — Total: $<%= v.total %> — Fecha: <%= new Date(v.fecha).toLocaleString('es-AR') %>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

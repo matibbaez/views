@@ -5,7 +5,8 @@ import {
   login,
   logout,
   renderDashboard,
-  renderVentas
+  renderVentas,
+  renderRegistros
 } from '../controllers/admin.controller.js';
 
 const router = express.Router();
@@ -20,5 +21,9 @@ router.get('/dashboard', authMiddleware, renderDashboard);
 
 // --- VENTAS ---
 router.get('/ventas', authMiddleware, renderVentas);
+
+// --- REGISTROS ---
+router.get('/registros', authMiddleware, renderRegistros);
+
 
 export default router;

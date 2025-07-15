@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Usuario, Producto, Venta, DetalleVenta } from '../models/index.js';
+import { obtenerVentasPaginadas } from '../services/venta.service.js';
+import { obtenerRegistrosAdmin } from '../services/estadisticas.service.js';
 
 // --- Login ---
 export const renderLogin = (req, res) => {
@@ -46,36 +48,24 @@ export const renderDashboard = async (req, res) => {
   });
 };
 
-// --- Ventas ---
+// --- Ventas (con paginación) ---
 export const renderVentas = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = 10;
-  // Contar total ventas sin incluir asociaciones para evitar conteo incorrecto
-  const count = await Venta.count();
-
-  const totalPages = Math.ceil(count / limit);
-
-  // Validar página en rango
-  let currentPage = page;
-  if (page < 1) currentPage = 1;
-  if (page > totalPages) currentPage = totalPages;
-
-  const offset = (currentPage - 1) * limit;
-
-  const ventas = await Venta.findAll({
-    include: [{
-      model: DetalleVenta,
-      as: 'detalles',
-      include: [{ model: Producto, as: 'producto' }]
-    }],
-    order: [['fecha', 'DESC']],
-    limit,
-    offset
-  });
+  const { ventas, totalPages, currentPage } = await obtenerVentasPaginadas(page);
 
   res.render('admin/ventas', {
     ventas,
-    currentPage,
-    totalPages
+    totalPages,
+    currentPage
+  });
+};
+
+// --- Registros (productos + ventas destacadas) ---
+export const renderRegistros = async (req, res) => {
+  const { productosMasVendidos, ventasMasCaras } = await obtenerRegistrosAdmin();
+
+  res.render('admin/registros', {
+    productosMasVendidos,
+    ventasMasCaras
   });
 };
