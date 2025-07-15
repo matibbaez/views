@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { Usuario, Producto, Venta, DetalleVenta } from '../models/index.js';
 import { obtenerVentasPaginadas } from '../services/venta.service.js';
 import { obtenerRegistrosAdmin } from '../services/estadisticas.service.js';
+import { autenticarUsuario } from '../services/auth.service.js';
 
 // --- Login ---
 export const renderLogin = (req, res) => {
@@ -10,15 +11,10 @@ export const renderLogin = (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  const usuario = await Usuario.findOne({ where: { email } });
+  const { usuario, error } = await autenticarUsuario(email, password);
 
-  if (!usuario) {
-    return res.render('admin/login', { error: 'Usuario no encontrado' });
-  }
-
-  const validPassword = await bcrypt.compare(password, usuario.password);
-  if (!validPassword) {
-    return res.render('admin/login', { error: 'Contraseña incorrecta' });
+  if (error) {
+    return res.render('admin/login', { error });
   }
 
   req.session.adminId = usuario.id;
