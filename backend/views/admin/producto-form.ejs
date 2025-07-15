@@ -50,7 +50,10 @@
 
       <div class="form-group" id="fechaShowGroup" style="display: none;">
         <label for="fechaShow">Fecha del show:</label>
-        <input type="date" name="fechaShow" id="fechaShow" min="<%= new Date().toISOString().split('T')[0] %>" value="<%= producto && producto.fechaShow ? producto.fechaShow.toISOString().split('T')[0] : '' %>">
+        <input type="date"
+          name="fechaShow"
+          id="fechaShow"
+          value="<%= producto && producto.fechaShow ? producto.fechaShow : '' %>">
       </div>
 
       <div class="form-group">
