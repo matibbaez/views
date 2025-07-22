@@ -88,7 +88,7 @@ Permite iniciar sesión con validación segura. Incluye botón de acceso rápido
 
 Panel con el listado completo de productos con opciones de editar, eliminar, activar y desactivar productos.
 
-![Dashboard](./images/dashboardAdmin.png)
+![Dashboard](./images/dashboardFinal.png)
 
 ---
 
@@ -96,7 +96,7 @@ Panel con el listado completo de productos con opciones de editar, eliminar, act
 
 Productos activos e inactivos.
 
-![Alta de producto](./images/productosAdmin.png)
+![Alta de producto](./images/verProductos.png)
 
 ---
 
@@ -104,7 +104,16 @@ Productos activos e inactivos.
 
 Ventas realizadas, con nombre del cliente, productos, cantidades, fecha y total.
 
-![Alta de producto](./images/ventasAdmin.png)
+![Alta de producto](./images/verVentas.png)
+
+---
+
+
+### ➕ Ver registros
+
+Ver 10 productos más vendidos y las 10 ventas más caras.
+
+![Alta de producto](./images/verVentas.png)
 
 ---
 
